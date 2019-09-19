@@ -23,3 +23,5 @@ The task is to apply filters to a spreadsheet and create charts based on filtere
 3. Select all of the data on the worksheet and create a line chart which can be filtered by publisher, whose rows are set by a game's year of release, and whose values are the sum of global sales for that year.
 
 * Create a 2D line graph that charts this data.
+
+Critic Score of games V global sales
