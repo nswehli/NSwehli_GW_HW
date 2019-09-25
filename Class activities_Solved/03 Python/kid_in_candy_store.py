@@ -30,7 +30,7 @@ while allowance < 6 and allowance >0:
         candyCart.append("Hershey Bar")
     if int(choice) == 7 :
         candyCart.append("Starbursts")
-    if int(choice) == 7 :
+    if int(choice) == 8 :
         candyCart.append("M&Ms")
         
     allowance = allowance - 1
