@@ -1,0 +1,6 @@
+poem=open('if.txt', 'w')
+poem.write("great poem by Kipling, But where is the poem??")
+poem.close()
+poem= open('if.txt','r')
+content= poem.read()
+print (content)

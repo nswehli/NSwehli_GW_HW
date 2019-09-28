@@ -14,27 +14,10 @@ for i in range(len(candyList)):
 
 while allowance < 6 and allowance >0:
     choice = input (" what is the index number of the candy you want? you have " + str(allowance)+ " choices")
-    if int(choice) == 0 :
-        candyCart.append("Snickers")
-    if int(choice) == 1 :
-        candyCart.append("Kit Kat")
-    if int(choice) == 2 :
-        candyCart.append("Sour Patch Kids")
-    if int(choice) == 3 :
-        candyCart.append("Juicy Fruit")    
-    if int(choice) == 4:
-        candyCart.append("Swedish Fish")
-    if int(choice) == 5 :
-        candyCart.append("Skittles")
-    if int(choice) == 6 :
-        candyCart.append("Hershey Bar")
-    if int(choice) == 7 :
-        candyCart.append("Starbursts")
-    if int(choice) == 8 :
-        candyCart.append("M&Ms")
+    candyCart.append(candyList[int(choice)]) 
+    
         
     allowance = allowance - 1
-    
     
 print (f"These are your choices : {candyCart}")
 
