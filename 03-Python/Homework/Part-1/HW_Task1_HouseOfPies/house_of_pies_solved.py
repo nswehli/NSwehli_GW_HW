@@ -18,10 +18,10 @@ while anotherorder =="y":
     
     
     for i in range(menu):
-        print("[" + str(i) + "] " + pieslist[i])
+        print("[" + str(i+1) + "] " + pieslist[i])
        
-    print ("Whch pie numbner you would like to order?")
-    selection = input()
+    print ("Whch pie number you would like to order?")
+    selection = (int(input())-1)
     
     if int(selection) == 0:
         pie = "Pecan"
