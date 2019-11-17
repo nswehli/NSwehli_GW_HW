@@ -1,0 +1,10 @@
+The different types of Joins:
+
+A Inner Join B: Only the records in Table A that are matched with records in Table B will be included.
+A Left Join B: All the records in Table A and only the records in Table B that are matched to records in Table A. Some records in Table may have missing values from Table B.
+A Right Join C : All the records in Table B + only the records in Table A that are matched to records in Table B. Some records in Table B may have missing values from Table A.
+A Full Join B: All the records in A and all the records in B whether they match or not.
+
+Part 2:
+This is a left join becuase all the records in the Vendor Tables are included despite one record not having a matching value in the Yarn table. 
+
