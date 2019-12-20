@@ -89,7 +89,7 @@ def scrape():
     Now = datetime.now()
 
     # one Python dictionary containing all of the scraped data
-    data = {"Last Update": Now, "Latest News": News, "Featured Image": featured_image_url, "Weather": LatestTweet, "Hemisphere Images": hemisphere_image_urls
+    data = {"LastUpdate": Now, "LatestNews": News, "Featured_Image": featured_image_url, "Weather": LatestTweet, "HemisphereImages": hemisphere_image_urls
             }
 
     print("******")
