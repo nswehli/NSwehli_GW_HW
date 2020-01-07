@@ -20,6 +20,7 @@ def home():
     # Return template and data
     return render_template("index.html", Data=NewsData)
 
+# db.foo.find().sort({$natural:1}).limit(50);
 
 # Route that will trigger the scrape function
 @app.route("/scrape")
@@ -29,7 +30,7 @@ def scrape():
     newsData = Newsscraper.scrape()
 
     # Update the Mongo database using update and upsert=True
-    mongo.db.collection.update({}, newsData, upsert=True)
+    mongo.db.collection.insert(newsData)
 
     # Redirect back to home page
     return redirect("/")

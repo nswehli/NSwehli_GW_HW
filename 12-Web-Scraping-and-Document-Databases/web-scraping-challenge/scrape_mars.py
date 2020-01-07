@@ -91,9 +91,7 @@ def scrape():
     # one Python dictionary containing all of the scraped data
     data = {"LastUpdate": Now, "LatestNews": News, "Featured_Image": featured_image_url, "Weather": LatestTweet, "HemisphereImages": hemisphere_image_urls
             }
-
+    browser.quit()
     print("******")
     print(f"Data Scraping Completed on {Now}")
     return data
-
-    browser.quit()
