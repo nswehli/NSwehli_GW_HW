@@ -1,0 +1,4 @@
+Endpoint=foodatlas.cvc7tm9vqggx.us-east-2.rds.amazonaws.com
+user name: postgres
+password nacRackE
+port 5432
