@@ -67,10 +67,8 @@ d3.json("samples.json").then(function (Data) {
             },
         }
     ];
+
     Plotly.newPlot('bubble', bdata);
-
-
-
 
 
     //filing the options in the dropdown menu
