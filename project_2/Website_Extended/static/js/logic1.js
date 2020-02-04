@@ -404,9 +404,8 @@ function updateData() {
 
   console.log(title1)
 
-  var x = []
-  var y1 = []
-  var y2 = []
+  var xaxis = []
+  var yaxis = []
 
   var variabledata1 = `/api/data/${category1}`;
   var variabledata2 = `/api/data/${category2}`;
@@ -416,13 +415,8 @@ function updateData() {
     console.log("X-Data", response)
     var xdata = response.features
     for (i = 0; i < xdata.length; i++) {
-      if (xdata[i].properties[`${variable1}`]) {
-        y1.push(xdata[i].properties[`${variable1}`]);
-      }
-    }
-    for (i = 0; i < xdata.length; i++) {
-      if (xdata[i].properties.NAME) {
-        x.push(xdata[i].properties.NAME);
+      if (xdata) {
+        xaxis.push(xdata[i].properties[`${variable1}`]);
       }
     }
   })
@@ -431,106 +425,21 @@ function updateData() {
     console.log("Y-Data", data)
     var ydata = data.features
     for (i = 0; i < ydata.length; i++) {
-      if (ydata[i].properties[`${variable2}`]) {
-        y2.push(ydata[i].properties[`${variable2}`]);
+      if (ydata) {
+        yaxis.push(ydata[i].properties[`${variable2}`]);
       }
     }
-    console.log('y1 values are :', y1)
-    console.log('y2 values are :', y2)
+    console.log('X values are :', xaxis)
+    console.log('y values are :', yaxis)
 
     //creating the scatter diagram
     var colorScale = ["#fc4242", "#fcd55d", "#baf5e2", "#a64102", "#872245", "#633f5b", "#024575"];
     var selectedColor = colorScale[(Math.floor(Math.random() * 7))]
 
-
-    var trace1 = {
-      x: x,
-      y: y1,
-      name: title1,
-      type: 'scatter',
-      mode: 'markers',
-      autorange: true,
-      autotick: true,
-    };
-
-    var trace2 = {
-      x: x,
-      y: y2,
-      name: title2,
-      xaxis: 'x2',
-      yaxis: 'y2',
-      type: 'scatter',
-      mode: 'markers',
-
-    };
-
-
-    var data = [trace1, trace2];
-
-    var layout = {
-      colorway: ["#fc4242", "#fcd55d", "#baf5e2", "#a64102", "#872245", "#633f5b", "#024575"],
-      showlegend: true,
-      legend: {
-
-        x: 10,
-        xanchor: 'left',
-        y: 1
-      },
-      xaxis: {
-        autorange: true,
-        autotick: true,
-        showticklabels: false,
-        title: {
-          text: "County",
-        },
-
-      },
-
-      xaxis2: {
-        autorange: true,
-        autotick: true,
-        showticklabels: false,
-        title: {
-          text: "County",
-        },
-
-      },
-
-
-      yaxis: {
-        autorange: true,
-        autotick: true,
-        showticklabels: true,
-        title: {
-          text: title1,
-        }
-
-      },
-
-      yaxis2: {
-        autorange: true,
-        autotick: true,
-        showticklabels: true,
-        title: {
-          text: title2,
-        }
-
-      },
-      grid: {
-        rows: 1,
-        columns: 2,
-        pattern: 'independent',
-        roworder: 'bottom to top'
-
-      }
-    };
-
-    Plotly.react('scatter2', data, layout);
-
     var data = [
       {
-        x: y1,
-        y: y2,
+        x: xaxis,
+        y: yaxis,
         // text: text,
         type: 'scatter',
         mode: 'markers',
@@ -569,34 +478,6 @@ function updateData() {
 }
 
 //initial scatter
-
-var trace1 = {
-  x: [1],
-  y: [1],
-  type: 'scatter'
-};
-
-var trace2 = {
-  x: [1],
-  y: [1],
-  xaxis: 'x2',
-  yaxis: 'y2',
-  type: 'scatter'
-};
-
-
-var data = [trace1, trace2];
-
-var layout = {
-  grid: {
-    rows: 1,
-    columns: 2,
-    pattern: 'independent',
-    roworder: 'bottom to top'
-  }
-};
-
-Plotly.react('scatter2', data, layout);
 
 var data = [
   {
