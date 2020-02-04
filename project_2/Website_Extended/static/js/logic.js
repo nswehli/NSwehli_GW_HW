@@ -160,8 +160,8 @@ var category = "health"
 var variableName = "Adult obesity rate, 2013"
 var variableCode = "PCT_OBESE_ADULTS13"
 
-var geoData = `/api/data/${category}`;
 var geojson;
+var geoData = `/api/data/${category}`;
 
 // Grab data with d3
 d3.json(geoData, function (data) {
@@ -224,7 +224,7 @@ d3.json(geoData, function (data) {
 
   legend.addTo(myMap);
 
-  //creating initial bubble chart
+  //creating initial scatter 
 
   var initial = variableCode
 
@@ -233,6 +233,8 @@ d3.json(geoData, function (data) {
   }
   console.log("Entered value is: " + initial);
   // var results = samples.filter(search);
+
+  //Related Scatter 
 
   //extracting the x and y values
 
@@ -268,12 +270,154 @@ d3.json(geoData, function (data) {
       mode: 'markers',
       marker: {
         color: "#0026b1",
-
       }
     }
   ];
 
   Plotly.newPlot('bar', data);
 
-
 });
+
+///new scatter to compare variables
+
+//Filling options-Select -1
+
+d3.selectAll("#categories2").on("change", menu2);
+function menu2() {
+  var url = "/api/data/variables"
+  d3.json(url, function (response) {
+    var selectedCategory = d3.select("#categories2 option:checked");
+    var category = selectedCategory.property("value").toUpperCase();
+    console.log(category)
+    console.log(response)
+    var results = response.filter(function (item) {
+      console.log(item.CategoryCode);
+      return item.CategoryCode == category;
+    });
+
+    // filling in the options for Variables menu
+    var subjectFilter = d3.select("#selDataset2")
+    subjectFilter.selectAll("option").remove();
+
+    results.forEach(item => {
+      var row = subjectFilter.append("option")
+      row.append("option").text(item.VariableName).attr("value", item.VariableCode);
+    });
+  });
+}
+// Filling options-Select -2
+d3.selectAll("#categories3").on("change", menu3);
+function menu3() {
+  var url = "/api/data/variables"
+  d3.json(url, function (response) {
+    var selectedCategory = d3.select("#categories3 option:checked");
+    var category = selectedCategory.property("value").toUpperCase();
+    // console.log(category)
+    // console.log(response)
+    var results = response.filter(function (item) {
+      return item.CategoryCode == category;
+    });
+
+    // filling in the options for Variables menu
+    var subjectFilter = d3.select("#selDataset3")
+    subjectFilter.selectAll("option").remove();
+
+    results.forEach(item => {
+      var row = subjectFilter.append("option")
+      row.append("option").text(item.VariableName).attr("value", item.VariableCode);
+    });
+  });
+}
+
+function updateData() {
+
+  var selectedCategory1 = d3.select("#categories2 option:checked");
+  var selectedCategory2 = d3.select("#categories3 option:checked");
+
+  var category1 = selectedCategory1.property("value");
+  var category2 = selectedCategory2.property("value");
+
+  var selectedVariable1 = d3.select("#selDataset2 option:checked").select("option");
+  var selectedVariable2 = d3.select("#selDataset3 option:checked").select("option");
+
+  var variable1 = selectedVariable1.attr("value");
+  var variable2 = selectedVariable2.attr("value");
+
+  var title1 = selectedVariable1.text()
+  var title2 = selectedVariable2.text()
+
+  console.log("Category 1: ", category1)
+  console.log("Category 2: ", category2)
+
+  console.log("Variable1 :", variable1)
+  console.log("Variable2 :", variable2)
+
+  console.log(title1)
+
+  var xaxis = []
+  var yaxis = []
+
+  var variabledata1 = `/api/data/${category1}`;
+  var variabledata2 = `/api/data/${category2}`;
+
+  // Grab x-data with d3
+  d3.json(variabledata1, function (response) {
+    console.log("X-Data", response)
+    var xdata = response.features
+    for (i = 0; i < xdata.length; i++) {
+      if (xdata) {
+        xaxis.push(xdata[i].properties[`${variable1}`]);
+      }
+    }
+  })
+  // Grab y-data with d3
+  d3.json(variabledata2, function (data) {
+    console.log("Y-Data", data)
+    var ydata = data.features
+    for (i = 0; i < ydata.length; i++) {
+      if (ydata) {
+        yaxis.push(ydata[i].properties[`${variable2}`]);
+      }
+    }
+    console.log('X values are :', xaxis)
+    console.log('y values are :', yaxis)
+
+    //creating the scatter diagram
+    var data = [
+      {
+        x: xaxis,
+        y: yaxis,
+        // text: text,
+        type: 'scatter',
+        mode: 'markers',
+        marker: {
+          color: "#024575",
+        }
+      }
+    ];
+
+    var layout = {
+      title: {
+        text: 'Variables relationship',
+
+        xref: 'paper',
+        x: 0.05,
+      },
+      xaxis: {
+        title: {
+          text: `${title1}`,
+        },
+      },
+      yaxis: {
+        title: {
+          text: `${title2}`,
+        }
+      }
+    };
+
+    Plotly.newPlot('scatter', data, layout);
+
+  })
+}
+
+
