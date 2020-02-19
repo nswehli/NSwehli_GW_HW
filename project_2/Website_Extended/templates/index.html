@@ -1,0 +1,25 @@
+<head>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+
+<body>
+    <H1>Playground</H1>
+    <script>
+        httpRequest = new XMLHttpRequest();
+        var output = []
+        httpRequest.onreadystatechange = function (data) {
+            var output = JSON.parse(data.target.responseText);
+            console.log("got something", output)
+        };
+
+        httpRequest.open('GET', 'https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json', false);
+        httpRequest.send();
+
+        console.log("Another printout", output)
+
+
+    </script>
+
+
+</body>
