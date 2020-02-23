@@ -23,7 +23,7 @@ d3.json(url).then(function (response) {
     console.log(response)
     var dateR = new Date(response.metadata.generated)
     d3.select("#Headline").text(response.metadata.title)
-    d3.select("#date").text(response.metadata.title)
+    d3.select("#date").text(dateR)
 
     var data = response.features
     for (var i = 0; i < data.length; i++) {
@@ -51,35 +51,39 @@ d3.json(url).then(function (response) {
             // This will make our marker's size proportionate to its population
             radius: data[i].properties.mag * 50000
         }).bindPopup("<h1>" + data[i].properties.title + "</h1> <hr> <h3>Event: " + data[i].properties.type + " on " + date + "</h3>").addTo(myMap);
+
+
+
     }
 
+    // Here we create a legend control object.
+    var legend = L.control({
+        position: "bottomright"
+    });
 
-    // var legend = L.control({ position: "topright" });
-    // legend.onAdd = function () {
-    //     var div = L.DomUtil.create("div", "info legend");
-    //     // var limits = geojson.options.limits;
-    //     // var colors = geojson.options.colors;
-    //     var labels = ["Test", "Test01"];
+    // Then add all the details for the legend
+    legend.onAdd = function () {
+        var div = L.DomUtil.create("div", "info legend");
 
-    //     // Add min & max
-    //     var legendInfo = `<h1> ${response.metadata.title} </h1>`
-    //     // "<div class=\"labels\">" +
-    //     // "<div class=\"min\">" + limits[0] + "</div>" +
-    //     // "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-    //     // "</div>";
+        var mag = [0, 2.5, 4.5];
+        var colors = [
+            "#ffa600",
+            "#ff5a1a",
+            "#fc1b2d",
 
-    //     div.innerHTML = legendInfo;
+        ];
 
-    //     labels.forEach(function (limit, index) {
-    //         labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-    //     });
+        // Looping through our intervals to generate a label with a colored square for each interval.
+        for (var i = 0; i < mag.length; i++) {
+            div.innerHTML +=
+                "<i style='background: " + colors[i] + "'></i> " +
+                mag[i] + (mag[i + 1] ? "&ndash;" + mag[i + 1] + "<br>" : "+");
+        }
+        return div;
+    };
 
-    //     div.innerHTML += "<ul>" + "Test" + "</ul>";
-    //     return div;
-    // };
-
-    // // Adding legend to the map
-    // legend.addTo(myMap);
+    // Finally, we our legend to the map.
+    legend.addTo(myMap);
 
     // }
     console.log("Done")
